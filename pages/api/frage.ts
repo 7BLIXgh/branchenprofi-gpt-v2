@@ -7,11 +7,11 @@ if (req.method !== 'POST') {
   return res.status(405).json({ error: 'Only POST allowed' })
 }
 
-// ✅ Debug hier – wirklich für POST-Requests
-console.log("🔑 Header:", req.headers['x-api-key'])
-console.log("🔑 Env Key:", process.env.API_SECRET_KEY)
-  
   const apiKey = req.headers['x-api-key']
+  
+  console.log("🔐 x-api-key erhalten:", apiKey)
+  console.log("🔐 env key:", process.env.API_SECRET_KEY)
+
   if (apiKey !== process.env.API_SECRET_KEY) {
     return res.status(401).json({ error: 'Unauthorized' })
   }
