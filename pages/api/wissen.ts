@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
-import { supabase } from '@/utils/supabaseClient'
-import { openai } from '@/utils/openaiClient'
+import { supabase } from '../../utils/supabaseClient'
+import { openai } from '../../utils/openaiClient'
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== 'POST') {
