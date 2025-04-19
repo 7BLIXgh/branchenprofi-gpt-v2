@@ -5,6 +5,8 @@ import { openai } from '../../utils/openaiClient'
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Only POST allowed' })
+    console.log("⬅️ Request-Methode:", req.method)
+
   }
 
   const apiKey = req.headers['x-api-key']
