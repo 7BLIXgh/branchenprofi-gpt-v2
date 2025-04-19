@@ -3,12 +3,14 @@ import { supabase } from '../../utils/supabaseClient'
 import { openai } from '../../utils/openaiClient'
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  if (req.method !== 'POST') {
-    console.log("🔑 Header:", req.headers['x-api-key'])
-console.log("🔑 Env Key:", process.env.API_SECRET_KEY)
-    return res.status(405).json({ error: 'Only POST allowed' })
-  }
+if (req.method !== 'POST') {
+  return res.status(405).json({ error: 'Only POST allowed' })
+}
 
+// ✅ Debug hier – wirklich für POST-Requests
+console.log("🔑 Header:", req.headers['x-api-key'])
+console.log("🔑 Env Key:", process.env.API_SECRET_KEY)
+  
   const apiKey = req.headers['x-api-key']
   if (apiKey !== process.env.API_SECRET_KEY) {
     return res.status(401).json({ error: 'Unauthorized' })
