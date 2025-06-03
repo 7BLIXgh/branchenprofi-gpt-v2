@@ -2,7 +2,12 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 import { supabase } from '../../utils/supabaseClient'
 import { openai } from '../../utils/openaiClient'
 
-
+if (!process.env.OPENAI_API_KEY) {
+  console.warn("Kein OpenAI API Key gesetzt – Embedding wird übersprungen.");
+}
+if (process.env.NODE_ENV === 'development') {
+  console.log("GPT-Embedding erzeugt – Länge:", embedding.length);
+}
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   res.setHeader('Access-Control-Allow-Origin', '*')
@@ -28,21 +33,45 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
 
   try {
+let embedding: number[] | null = null;
+
+try {
     const embedRes = await openai.embeddings.create({
-      model: 'text-embedding-ada-002',
-      input: content.slice(0, 8000),
-    })
+    model: 'text-embedding-ada-002',
+    input: content.slice(0, 8000),
+  });
 
-    const embedding = embedRes.data[0].embedding
+  if (
+    Array.isArray(embedRes.data[0]?.embedding) &&
+    embedRes.data[0].embedding.length === 1536
+  ) {
+    embedding = embedRes.data[0].embedding;
+  } else {
+    console.warn("⚠️ Ungültiges embedding-Format oder Länge");
+  }
+} catch (err) {
+  console.error("❌ Fehler beim Erzeugen von embedding:", err.message);
+}
 
-    const { data, error } = await supabase.from('wissen').insert({
-      content,
-      branche,
-      region,
-      metadata: metadata || {},
-      version: 1,
-      update_von: update_von || null,
-    }).select('id')
+
+    const insertPayload: any = {
+  content,
+  branche,
+  region,
+  metadata: metadata || {},
+  version: 1,
+  update_von: update_von || null,
+};
+
+if (embedding) {
+  insertPayload.embedding = embedding;
+}
+
+const { data, error } = await supabase
+  .from('wissen')
+  .insert(insertPayload)
+  .select('id');
+
 
     if (error) throw error
 
