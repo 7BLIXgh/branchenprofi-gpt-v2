@@ -22,24 +22,32 @@ const daten = {
 
 export default function BranchenanalysePage() {
   return (
-    <main className="min-h-screen bg-gradient-to-br from-gray-50 to-white p-8 text-gray-800 font-sans">
-      <div className="max-w-4xl mx-auto">
-        <header className="mb-10">
-          <h1 className="text-4xl font-bold mb-2">🍽️ Branchenanalyse {daten.branche} – {daten.region} ({daten.jahr})</h1>
-          <p className="text-gray-600 text-lg">Aktuelle Marktlage, Trends & Herausforderungen</p>
+    <main className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-pink-50 text-gray-800 font-sans">
+      {/* Navigation Bar */}
+      <nav className="bg-white shadow sticky top-0 z-10">
+        <div className="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
+          <h1 className="text-xl font-bold text-blue-600">Branchenprofi-GPT</h1>
+          <span className="text-sm text-gray-500">Analysemodul 2025</span>
+        </div>
+      </nav>
+
+      <div className="max-w-4xl mx-auto px-6 py-10">
+        <header className="mb-10 text-center">
+          <h2 className="text-4xl font-extrabold text-blue-700 mb-2">🍽️ Branchenanalyse: {daten.branche}</h2>
+          <p className="text-gray-600 text-lg">{daten.region}, {daten.jahr} – Markt, Trends, Herausforderungen</p>
         </header>
 
         <section className="mb-8">
-          <div className="bg-white rounded-xl shadow p-6 border border-gray-200">
-            <h2 className="text-2xl font-semibold mb-3">📊 Marktsituation</h2>
-            <p>{daten.marktsituation}</p>
+          <div className="bg-white rounded-2xl shadow-xl p-6 border-l-8 border-blue-200">
+            <h3 className="text-2xl font-semibold text-blue-800 mb-3">📊 Marktsituation</h3>
+            <p className="text-gray-700 leading-relaxed">{daten.marktsituation}</p>
           </div>
         </section>
 
         <section className="mb-8">
-          <div className="bg-white rounded-xl shadow p-6 border border-gray-200">
-            <h2 className="text-2xl font-semibold mb-3">📈 Trends & Chancen</h2>
-            <ul className="list-disc list-inside space-y-1">
+          <div className="bg-white rounded-2xl shadow-xl p-6 border-l-8 border-green-200">
+            <h3 className="text-2xl font-semibold text-green-800 mb-3">📈 Trends & Chancen</h3>
+            <ul className="list-disc list-inside text-gray-700 space-y-2">
               {daten.trends.map((punkt, i) => (
                 <li key={i}>{punkt}</li>
               ))}
@@ -48,9 +56,9 @@ export default function BranchenanalysePage() {
         </section>
 
         <section className="mb-8">
-          <div className="bg-white rounded-xl shadow p-6 border border-gray-200">
-            <h2 className="text-2xl font-semibold mb-3">⚠️ Herausforderungen</h2>
-            <ul className="list-disc list-inside space-y-1">
+          <div className="bg-white rounded-2xl shadow-xl p-6 border-l-8 border-red-200">
+            <h3 className="text-2xl font-semibold text-red-800 mb-3">⚠️ Herausforderungen</h3>
+            <ul className="list-disc list-inside text-gray-700 space-y-2">
               {daten.herausforderungen.map((punkt, i) => (
                 <li key={i}>{punkt}</li>
               ))}
@@ -58,7 +66,7 @@ export default function BranchenanalysePage() {
           </div>
         </section>
 
-        <footer className="text-sm text-gray-500 text-center mt-12">
+        <footer className="text-sm text-gray-500 text-center mt-16">
           Letztes Update durch Branchenprofi-GPT – {daten.jahr}
         </footer>
       </div>
