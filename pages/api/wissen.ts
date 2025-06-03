@@ -51,7 +51,9 @@ try {
 }
 
   if (process.env.NODE_ENV === 'development') {
-  console.log("GPT-Embedding erzeugt – Länge:", embedding.length);
+    if (embedding && Array.isArray(embedding)) {
+      console.log("✅ GPT-Embedding erzeugt – Länge:", embedding.length);
+    }  
   }
     const insertPayload: any = {
   content,
