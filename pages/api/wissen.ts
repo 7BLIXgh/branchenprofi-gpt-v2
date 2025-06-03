@@ -2,7 +2,17 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 import { supabase } from '../../utils/supabaseClient'
 import { openai } from '../../utils/openaiClient'
 
+
+
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+  res.setHeader('Access-Control-Allow-Origin', '*')
+  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS')
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, x-api-key')
+
+  if (req.method === 'OPTIONS') {
+    return res.status(200).end()
+  }
+
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Only POST allowed' })
   }
@@ -39,7 +49,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     return res.status(200).json({ status: 'ok', id: data[0].id })
   } catch (err: any) {
-    console.error('❌ Upload error:', err)
-    return res.status(500).json({ error: err.message || 'Upload failed' })
-  }
+  const fehlerId = `FEHLER-${Date.now()}`
+  console.error(`❌ ${fehlerId}:`, err.stack || err.message || err)
+
+  return res.status(500).json({
+    error: 'Interner Serverfehler',
+    fehlerId,
+    debug: process.env.NODE_ENV === 'development' ? (err.message || err) : undefined
+  })
+}
+
 }
