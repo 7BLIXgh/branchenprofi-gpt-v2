@@ -42,7 +42,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       metadata: metadata || {},
       version: 1,
       update_von: update_von || null,
-      embedding,
     }).select('id')
 
     if (error) throw error
