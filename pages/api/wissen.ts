@@ -5,9 +5,6 @@ import { openai } from '../../utils/openaiClient'
 if (!process.env.OPENAI_API_KEY) {
   console.warn("Kein OpenAI API Key gesetzt – Embedding wird übersprungen.");
 }
-if (process.env.NODE_ENV === 'development') {
-  console.log("GPT-Embedding erzeugt – Länge:", embedding.length);
-}
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   res.setHeader('Access-Control-Allow-Origin', '*')
@@ -53,7 +50,9 @@ try {
   console.error("❌ Fehler beim Erzeugen von embedding:", err.message);
 }
 
-
+  if (process.env.NODE_ENV === 'development') {
+  console.log("GPT-Embedding erzeugt – Länge:", embedding.length);
+  }
     const insertPayload: any = {
   content,
   branche,
