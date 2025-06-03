@@ -2,6 +2,10 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 import { supabase } from '../../utils/supabaseClient'
 import { openai } from '../../utils/openaiClient'
 
+res.setHeader('Access-Control-Allow-Origin', '*')
+res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS')
+res.setHeader('Access-Control-Allow-Headers', 'Content-Type, x-api-key')
+
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
 if (req.method !== 'POST') {
   return res.status(405).json({ error: 'Only POST allowed' })
