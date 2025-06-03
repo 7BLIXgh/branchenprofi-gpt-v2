@@ -1,6 +1,6 @@
-import { Card, CardContent } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { Separator } from "@/components/ui/separator"
+import { Card, CardContent } from "../components/ui/card"
+import { Badge } from "../components/ui/badge"
+import { Separator } from "../components/ui/separator"
 import { Sparkles, MapPin, TrendingUp, Leaf } from "lucide-react"
 
 export default function Home() {
