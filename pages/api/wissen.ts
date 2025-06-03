@@ -46,7 +46,7 @@ try {
   } else {
     console.warn("⚠️ Ungültiges embedding-Format oder Länge");
   }
-} catch (err) {
+} catch (err: any) {
   console.error("❌ Fehler beim Erzeugen von embedding:", err.message);
 }
 
